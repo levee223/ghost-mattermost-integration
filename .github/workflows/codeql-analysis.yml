@@ -61,7 +61,7 @@ jobs:
         restore-keys: ${{ runner.os }}-gradle
 
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew build -x test
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
