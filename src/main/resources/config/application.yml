@@ -70,7 +70,9 @@ app:
 
 ---
 spring:
-  profiles: production
+  config:
+    activate:
+      on-profile: production
   thymeleaf:
     cache: true
 
