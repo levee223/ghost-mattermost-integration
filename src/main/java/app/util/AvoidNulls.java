@@ -7,8 +7,7 @@ import java.util.Set;
 
 public final class AvoidNulls {
 
-    private AvoidNulls() {
-    }
+    private AvoidNulls() {}
 
     public static <T> List<T> ensure(List<T> value) {
         return value != null ? value : Collections.emptyList();

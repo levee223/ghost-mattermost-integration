@@ -29,8 +29,7 @@ public class UserPreferences {
         @JsonSetter(nulls = Nulls.AS_EMPTY)
         public List<String> authors = Collections.emptyList();
 
-        public Value() {
-        }
+        public Value() {}
 
         public Value(NotificationPreferencesForm form) {
             all = form.isAll();

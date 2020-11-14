@@ -15,8 +15,7 @@ public class NotificationPreferencesForm {
     private List<String> tags = Collections.emptyList();
     private List<String> authors = Collections.emptyList();
 
-    public NotificationPreferencesForm() {
-    }
+    public NotificationPreferencesForm() {}
 
     public NotificationPreferencesForm(Optional<UserPreferences.Value> userPreferences) {
         userPreferences.ifPresent(value -> {

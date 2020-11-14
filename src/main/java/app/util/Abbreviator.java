@@ -6,8 +6,7 @@ import java.util.List;
 
 public final class Abbreviator {
 
-    private Abbreviator() {
-    }
+    private Abbreviator() {}
 
     public static String abbreviate(final String text, final int maxLength, final List<String> keywords) {
         if (text.length() <= maxLength) {
