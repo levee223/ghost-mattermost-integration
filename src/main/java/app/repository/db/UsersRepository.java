@@ -26,8 +26,7 @@ public class UsersRepository {
     public Optional<UserPreferences.Value> getPreferences(final String userId) {
         String jsonPreferences = null;
         try {
-            jsonPreferences = jdbcTemplate.queryForObject("SELECT value FROM users WHERE id=?", new Object[] {userId},
-                    String.class);
+            jsonPreferences = jdbcTemplate.queryForObject("SELECT value FROM users WHERE id=?", String.class, userId);
         } catch (EmptyResultDataAccessException ignore) {
             // fall through
         }

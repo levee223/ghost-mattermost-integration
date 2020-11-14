@@ -53,7 +53,7 @@ public class SearchRepository {
             logger.debug("Get posts query: sql={}, args={}", sql, args);
         }
 
-        return jdbcTemplate.query(sql.toString(), args.toArray(), (ResultSet rs) -> {
+        return jdbcTemplate.query(sql.toString(), (ResultSet rs) -> {
             final var posts = new ArrayList<Post>();
             while (rs.next()) {
                 final Post post = new Post();
@@ -68,7 +68,7 @@ public class SearchRepository {
                 logger.debug("Get posts result: " + posts);
             }
             return posts;
-        });
+        }, args.toArray());
     }
 
     public Map<String, String> getAuthorsWithNameIdMap(final Supplier<Map<String, String>> mapFactory) {
