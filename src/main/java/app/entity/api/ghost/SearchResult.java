@@ -1,20 +1,14 @@
 package app.entity.api.ghost;
 
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import app.util.ToStringBean;
 
 import java.util.Date;
 
-public class SearchResult {
+public class SearchResult extends ToStringBean {
 
     public String title;
     public String slug;
     public String summary;
     public Date updatedAt;
-
-    @Override
-    public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SIMPLE_STYLE);
-    }
 
 }

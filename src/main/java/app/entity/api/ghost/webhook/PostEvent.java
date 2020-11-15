@@ -1,40 +1,30 @@
 package app.entity.api.ghost.webhook;
 
+import app.util.ToStringBean;
+
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.util.Collections;
 import java.util.List;
 
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class PostEvent {
+public class PostEvent extends ToStringBean {
 
     @JsonSetter(nulls = Nulls.FAIL)
     public Post post;
 
-    @Override
-    public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SIMPLE_STYLE);
-    }
-
     @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-    public static class Post {
+    public static class Post extends ToStringBean {
         @JsonSetter(nulls = Nulls.FAIL)
         public Current current;
 
         public Previous previous;
 
-        @Override
-        public String toString() {
-            return ReflectionToStringBuilder.toString(this, ToStringStyle.SIMPLE_STYLE);
-        }
-
         @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-        public static class Current {
+        public static class Current extends ToStringBean {
             public String id;
 
             @JsonSetter(nulls = Nulls.FAIL)
@@ -56,13 +46,8 @@ public class PostEvent {
             public String excerpt;
             public int readingTime;
 
-            @Override
-            public String toString() {
-                return ReflectionToStringBuilder.toString(this, ToStringStyle.SIMPLE_STYLE);
-            }
-
             @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-            public static class Author {
+            public static class Author extends ToStringBean {
                 @JsonSetter(nulls = Nulls.FAIL)
                 public String id;
 
@@ -72,15 +57,10 @@ public class PostEvent {
                 public String slug;
                 public String email;
                 public String url;
-
-                @Override
-                public String toString() {
-                    return ReflectionToStringBuilder.toString(this, ToStringStyle.SIMPLE_STYLE);
-                }
             }
 
             @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-            public static class Tag {
+            public static class Tag extends ToStringBean {
                 @JsonSetter(nulls = Nulls.FAIL)
                 public String id;
                 @JsonSetter(nulls = Nulls.FAIL)
@@ -88,24 +68,14 @@ public class PostEvent {
 
                 public String slug;
                 public String url;
-
-                @Override
-                public String toString() {
-                    return ReflectionToStringBuilder.toString(this, ToStringStyle.SIMPLE_STYLE);
-                }
             }
         }
 
         @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-        public static class Previous {
+        public static class Previous extends ToStringBean {
             public String status;
             public String updatedAt;
             public String publishedAt;
-
-            @Override
-            public String toString() {
-                return ReflectionToStringBuilder.toString(this, ToStringStyle.SIMPLE_STYLE);
-            }
         }
     }
 

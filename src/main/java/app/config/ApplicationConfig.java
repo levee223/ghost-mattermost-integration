@@ -1,7 +1,7 @@
 package app.config;
 
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import app.util.ToStringBean;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConstructorBinding;
 import org.springframework.validation.annotation.Validated;
@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @ConfigurationProperties(prefix = "app", ignoreUnknownFields = false)
 @ConstructorBinding
 @Validated
-public class ApplicationConfig {
+public class ApplicationConfig extends ToStringBean {
 
     @NotNull
     private final Ghost ghost;
@@ -33,12 +33,7 @@ public class ApplicationConfig {
         return mattermost;
     }
 
-    @Override
-    public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SIMPLE_STYLE);
-    }
-
-    public static class Ghost {
+    public static class Ghost extends ToStringBean {
         @NotNull
         private final Api api;
 
@@ -58,12 +53,7 @@ public class ApplicationConfig {
             return outgoingWebhook;
         }
 
-        @Override
-        public String toString() {
-            return ReflectionToStringBuilder.toString(this, ToStringStyle.SIMPLE_STYLE);
-        }
-
-        public static class Api {
+        public static class Api extends ToStringBean {
             @NotEmpty
             private final String url;
 
@@ -82,14 +72,9 @@ public class ApplicationConfig {
             public String getKey() {
                 return key;
             }
-
-            @Override
-            public String toString() {
-                return ReflectionToStringBuilder.toString(this, ToStringStyle.SIMPLE_STYLE);
-            }
         }
 
-        public static class OutgoingWebhook {
+        public static class OutgoingWebhook extends ToStringBean {
             @NotEmpty
             private final String authorizedkey;
 
@@ -100,15 +85,10 @@ public class ApplicationConfig {
             public String getAuthorizedkey() {
                 return authorizedkey;
             }
-
-            @Override
-            public String toString() {
-                return ReflectionToStringBuilder.toString(this, ToStringStyle.SIMPLE_STYLE);
-            }
         }
     }
 
-    public static class Mattermost {
+    public static class Mattermost extends ToStringBean {
         @NotNull
         private final Api api;
 
@@ -120,12 +100,7 @@ public class ApplicationConfig {
             return api;
         }
 
-        @Override
-        public String toString() {
-            return ReflectionToStringBuilder.toString(this, ToStringStyle.SIMPLE_STYLE);
-        }
-
-        public static class Api {
+        public static class Api extends ToStringBean {
             @NotEmpty
             private final String url;
 
@@ -143,11 +118,6 @@ public class ApplicationConfig {
 
             public String getAccessToken() {
                 return accessToken;
-            }
-
-            @Override
-            public String toString() {
-                return ReflectionToStringBuilder.toString(this, ToStringStyle.SIMPLE_STYLE);
             }
         }
     }

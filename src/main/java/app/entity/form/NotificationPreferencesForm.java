@@ -1,15 +1,13 @@
 package app.entity.form;
 
 import app.entity.db.UserPreferences;
-
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import app.util.ToStringBean;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class NotificationPreferencesForm {
+public class NotificationPreferencesForm extends ToStringBean {
 
     private boolean all;
     private List<String> tags = Collections.emptyList();
@@ -47,11 +45,6 @@ public class NotificationPreferencesForm {
 
     public void setAuthors(List<String> authors) {
         this.authors = authors;
-    }
-
-    @Override
-    public String toString() {
-        return ReflectionToStringBuilder.toString(this, ToStringStyle.SIMPLE_STYLE);
     }
 
 }

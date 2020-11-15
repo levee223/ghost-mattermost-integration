@@ -1,7 +1,7 @@
 package app.controller;
 
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+import app.util.ToStringBean;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.ConversionNotSupportedException;
@@ -82,7 +82,7 @@ abstract class ErrorHandler {
         return UUID.randomUUID().toString();
     }
 
-    class ErrorResponse {
+    class ErrorResponse extends ToStringBean {
         private final String id;
         private final String message;
 
@@ -97,11 +97,6 @@ abstract class ErrorHandler {
 
         public String getMessage() {
             return message;
-        }
-
-        @Override
-        public String toString() {
-            return ReflectionToStringBuilder.toString(this, ToStringStyle.SIMPLE_STYLE);
         }
     }
 
