@@ -44,7 +44,7 @@ spring:
           mattermost:
             authorizationUri: "http://localhost:8065/oauth/authorize"
             tokenUri: "http://localhost:8065/oauth/access_token"
-            userInfoUri: "http://localhost:8065//api/v4/users/me"
+            userInfoUri: "http://localhost:8065/api/v4/users/me"
             userNameAttribute: username
 
   thymeleaf:
