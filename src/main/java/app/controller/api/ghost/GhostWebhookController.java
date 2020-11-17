@@ -32,7 +32,7 @@ public class GhostWebhookController {
 
     private static final Logger logger = LoggerFactory.getLogger(GhostWebhookController.class);
 
-    private static final String RESPONSE_OK = "";
+    private static final String RESPONSE_OK = "OK";
 
     @Autowired
     ApplicationConfig appConfig;
