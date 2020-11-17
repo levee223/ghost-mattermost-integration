@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -70,8 +71,11 @@ public class MattermostApiService {
     }
 
     CreateDirectMessageChannelResponse createDirectMessageChannel(final String userId1, final String userId2) {
-        final RequestBody requestBody = RequestBody.create(REQUEST_CONTENT_TYPE,
-                jsonMapper.writeValueAsBytes(new String[] {userId1, userId2}));
+        final byte[] requestBodyContent = jsonMapper.writeValueAsBytes(new String[] {userId1, userId2});
+        if (logger.isDebugEnabled()) {
+            logger.debug("createDirectMessageChannel: {}", new String(requestBodyContent, StandardCharsets.UTF_8));
+        }
+        final RequestBody requestBody = RequestBody.create(REQUEST_CONTENT_TYPE, requestBodyContent);
         return post("/channels/direct", requestBody, CreateDirectMessageChannelResponse.class);
     }
 
@@ -80,8 +84,11 @@ public class MattermostApiService {
         postData.put("channel_id", channelId);
         postData.put("message", message);
 
-        final RequestBody requestBody = RequestBody.create(REQUEST_CONTENT_TYPE,
-                jsonMapper.writeValueAsBytes(postData));
+        final byte[] requestBodyContent = jsonMapper.writeValueAsBytes(postData);
+        if (logger.isDebugEnabled()) {
+            logger.debug("createPost: {}", new String(requestBodyContent, StandardCharsets.UTF_8));
+        }
+        final RequestBody requestBody = RequestBody.create(REQUEST_CONTENT_TYPE, requestBodyContent);
         return post("/posts", requestBody, CreatePostResponse.class);
     }
 
