@@ -14,7 +14,8 @@ public class ComponentConfig {
 
     @Bean
     public OkHttpClient httpClient() {
-        final OkHttpClient httpClient = new OkHttpClient.Builder().build();
+        final OkHttpClient httpClient = new OkHttpClient.Builder().followRedirects(false).followSslRedirects(false)
+                .retryOnConnectionFailure(true).build();
         return httpClient;
     }
 
