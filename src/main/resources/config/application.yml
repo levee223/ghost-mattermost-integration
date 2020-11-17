@@ -1,9 +1,9 @@
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: "jdbc:mysql://localhost/app?characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true"
-    username: app_user
-    password: app_password
+    url: "jdbc:mysql://localhost/mmintegration?characterEncoding=UTF-8&useSSL=false&allowPublicKeyRetrieval=true"
+    username: mmiuser
+    password: mmipassword
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
       connectionTimeout: 30000
@@ -15,7 +15,7 @@ spring:
 
   datasourceGhost:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: "jdbc:mysql://localhost:13306/ghost?characterEncoding=UTF-8"
+    url: "jdbc:mysql://localhost/ghost?characterEncoding=UTF-8"
     username: root
     password: example
     type: com.zaxxer.hikari.HikariDataSource
