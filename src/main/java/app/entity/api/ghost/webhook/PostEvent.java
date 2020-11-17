@@ -25,6 +25,7 @@ public class PostEvent extends ToStringBean {
 
         @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
         public static class Current extends ToStringBean {
+            @JsonSetter(nulls = Nulls.FAIL)
             public String id;
 
             @JsonSetter(nulls = Nulls.FAIL)

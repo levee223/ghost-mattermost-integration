@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -33,6 +35,7 @@ public class GhostWebhookController {
     private static final Logger logger = LoggerFactory.getLogger(GhostWebhookController.class);
 
     private static final String RESPONSE_OK = "OK";
+    private static final int MAX_HISTORY = 10;
 
     @Autowired
     ApplicationConfig appConfig;
@@ -43,11 +46,24 @@ public class GhostWebhookController {
     @Autowired
     MattermostApiService mattermostApiService;
 
+    Deque<String> postPublishedHistories = new ArrayDeque<>(MAX_HISTORY);
     ConcurrentLinkedQueue<Pair<List<String>, PostEvent>> retryQueue = new ConcurrentLinkedQueue<>();
 
     @PostMapping("/post.published")
     public String postPublished(@RequestBody final PostEvent postEvent) {
         logger.debug("Ghost post.published: {}", postEvent);
+
+        synchronized (postPublishedHistories) {
+            if (postPublishedHistories.contains(postEvent.post.current.id)) {
+                logger.warn("Ghost post.published duplicated: id={}, title={}", postEvent.post.current.id,
+                        postEvent.post.current.title);
+                return RESPONSE_OK;
+            }
+            if (postPublishedHistories.size() >= MAX_HISTORY) {
+                postPublishedHistories.removeFirst();
+            }
+            postPublishedHistories.addLast(postEvent.post.current.id);
+        }
 
         List<String> targetUsers = null;
         try {
