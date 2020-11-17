@@ -53,7 +53,7 @@ public class MattermostApiService {
             String message = null;
             try {
                 dmChannelId = createDirectMessageChannel(botUserId, targetUser).id;
-                message = String.format("[%s](%s)", postEvent.post.current.title, postEvent.post.current.url);
+                message = postEvent.post.current.url;
                 createPost(dmChannelId, message);
             } catch (Exception ex) {
                 logger.error("Error occurred in notify updates. dmChannelId=" + dmChannelId, ex);
