@@ -5,6 +5,7 @@ import app.entity.api.ghost.webhook.PostEvent;
 import app.entity.api.mattermost.CreateDirectMessageChannelResponse;
 import app.entity.api.mattermost.CreatePostResponse;
 import app.entity.api.mattermost.GetMeResponse;
+import app.entity.api.mattermost.UnsuccessfulResponse;
 import app.util.JsonMapper;
 
 import okhttp3.MediaType;
@@ -16,7 +17,9 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientResponseException;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -57,10 +60,20 @@ public class MattermostApiService {
                 createPost(dmChannelId, message);
             } catch (Exception ex) {
                 logger.error("Error occurred in notify updates. dmChannelId=" + dmChannelId, ex);
-                if (failedUsers == null) {
-                    failedUsers = new ArrayList<>();
+
+                boolean retry = true;
+                if (ex instanceof RestClientResponseException) {
+                    final HttpStatus status = HttpStatus.resolve(((RestClientResponseException) ex).getRawStatusCode());
+                    if (status != null && status.is4xxClientError()) {
+                        retry = false;
+                    }
                 }
-                failedUsers.add(targetUser);
+                if (retry) {
+                    if (failedUsers == null) {
+                        failedUsers = new ArrayList<>();
+                    }
+                    failedUsers.add(targetUser);
+                }
             }
         }
         return failedUsers != null ? Optional.of(new ImmutablePair<>(failedUsers, postEvent)) : Optional.empty();
@@ -118,6 +131,12 @@ public class MattermostApiService {
         try (final var response = httpClient.newCall(request).execute()) {
             if (logger.isDebugEnabled()) {
                 logger.debug("{}: {} {}", response.request(), response.code(), response.message());
+            }
+            if (!response.isSuccessful()) {
+                final UnsuccessfulResponse errorResponse = jsonMapper.readValue(response.body().byteStream(),
+                        UnsuccessfulResponse.class);
+                throw new RestClientResponseException(errorResponse.toString(), response.code(), response.message(),
+                        null, null, null);
             }
             final T mappedData = jsonMapper.readValue(response.body().byteStream(), mappedClass);
             return mappedData;
