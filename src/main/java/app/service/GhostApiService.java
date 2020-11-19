@@ -2,6 +2,7 @@ package app.service;
 
 import app.config.ApplicationConfig;
 import app.entity.api.ghost.content.Authors;
+import app.entity.api.ghost.content.Errors;
 import app.entity.api.ghost.content.Tags;
 import app.util.JsonMapper;
 
@@ -11,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientResponseException;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -58,6 +60,11 @@ public class GhostApiService {
         try (final var response = httpClient.newCall(request).execute()) {
             if (logger.isDebugEnabled()) {
                 logger.debug("{}: {} {}", response.request(), response.code(), response.message());
+            }
+            if (!response.isSuccessful()) {
+                final Errors errors = jsonMapper.readValue(response.body().byteStream(), Errors.class);
+                throw new RestClientResponseException(errors.toString(), response.code(), response.message(), null,
+                        null, null);
             }
             final T mappedData = jsonMapper.readValue(response.body().byteStream(), mappedClass);
             return mappedData;
