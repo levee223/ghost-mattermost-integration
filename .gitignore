@@ -1,32 +1,33 @@
 ### Eclipse ###
-bin/
+.apt_generated/
+.apt_generated_test/
 .classpath
+.factorypath
 .project
+.recommenders/
 .settings/*
 !.settings/org.eclipse.jdt.core.prefs
 !.settings/org.eclipse.jdt.ui.prefs
+.sts4-cache/
+bin/
 
 ### Maven ###
-target/
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-pom.xml.next
-release.properties
-dependency-reduced-pom.xml
-buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
+buildNumber.properties
+dependency-reduced-pom.xml
+pom.xml.next
+pom.xml.releaseBackup
+pom.xml.tag
+pom.xml.versionsBackup
+release.properties
+target/
 
 ### Gradle ###
 .gradle
+.gradletasknamecache
 build/
-
-# Ignore Gradle GUI config
 gradle-app.setting
 
-# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
-!gradle-wrapper.jar
-
-# Cache of project
-.gradletasknamecache
+### Java ###
+hs_err_pid*
