@@ -1,9 +1,9 @@
 package app.service;
 
 import app.config.ApplicationConfig;
-import app.entity.api.ghost.content.Authors;
+import app.entity.api.ghost.Authors;
+import app.entity.api.ghost.Tags;
 import app.entity.api.ghost.content.Errors;
-import app.entity.api.ghost.content.Tags;
 import app.util.JsonMapper;
 
 import okhttp3.OkHttpClient;
@@ -48,8 +48,8 @@ public class GhostApiService {
     Request buildRequest(final String path, final String additionalQueryString,
             final Consumer<Request.Builder> additionalBuilder) {
         final Request.Builder builder = new Request.Builder();
-        builder.url(String.format("%s/ghost/api/v3/content%s?key=%s%s", appConfig.getGhost().getApi().getUrl(), path,
-                appConfig.getGhost().getApi().getKey(), additionalQueryString));
+        builder.url(String.format("%s/ghost/api/v3/content%s?key=%s%s", appConfig.ghost().api().url(), path,
+                appConfig.ghost().api().key(), additionalQueryString));
         if (additionalBuilder != null) {
             additionalBuilder.accept(builder);
         }

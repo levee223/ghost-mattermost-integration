@@ -1,6 +1,7 @@
 package app.repository.db.ghost;
 
 import app.config.GhostDataSourceConfig;
+import app.entity.db.ghost.ImmutablePost;
 import app.entity.db.ghost.Post;
 
 import org.slf4j.Logger;
@@ -56,12 +57,8 @@ public class SearchRepository {
         return jdbcTemplate.query(sql.toString(), (ResultSet rs) -> {
             final var posts = new ArrayList<Post>();
             while (rs.next()) {
-                final Post post = new Post();
-                post.id = rs.getString(1);
-                post.title = rs.getString(2);
-                post.slug = rs.getString(3);
-                post.plaintext = rs.getString(4);
-                post.updatedAt = rs.getTimestamp(5);
+                final Post post = ImmutablePost.builder().id(rs.getString(1)).title(rs.getString(2))
+                        .slug(rs.getString(3)).plaintext(rs.getString(4)).updatedAt(rs.getTimestamp(5)).build();
                 posts.add(post);
             }
             if (logger.isDebugEnabled()) {

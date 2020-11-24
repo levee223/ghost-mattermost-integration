@@ -1,8 +1,10 @@
 package app.controller.auth;
 
-import app.entity.api.ghost.content.Authors;
-import app.entity.api.ghost.content.Tags;
+import app.entity.api.ghost.Authors;
+import app.entity.api.ghost.Tags;
+import app.entity.db.ImmutableUserPreferences;
 import app.entity.db.UserPreferences;
+import app.entity.form.ImmutableNotificationPreferencesForm;
 import app.entity.form.NotificationPreferencesForm;
 import app.repository.db.UsersRepository;
 import app.service.GhostApiService;
@@ -41,17 +43,20 @@ public class NotificationPreferencesController {
         final var tags = ghostApiService.getTags();
         final var authors = ghostApiService.getAuthors();
 
-        final Optional<UserPreferences.Value> userPrefeerences = usersRepository
+        final Optional<UserPreferences.ValueType> userPrefeerences = usersRepository
                 .getPreferences(principal.getAttribute("id"));
-        final var form = new NotificationPreferencesForm(userPrefeerences);
+        final NotificationPreferencesForm form = userPrefeerences
+                .map(prefs -> ImmutableNotificationPreferencesForm.builder().all(prefs.all()).tags(prefs.tags())
+                        .authors(prefs.authors()).build())
+                .orElseGet(() -> ImmutableNotificationPreferencesForm.builder().build());
 
         model.addAttribute("username", principal.getAttribute("username"));
-        model.addAttribute("tags", tags.tags);
-        model.addAttribute("authors", authors.authors);
+        model.addAttribute("tags", tags.tags());
+        model.addAttribute("authors", authors.authors());
         model.addAttribute("form", form);
 
         if (logger.isDebugEnabled()) {
-            logger.debug("{}#get model={}", NotificationPreferencesController.class.getSimpleName(), model);
+            logger.debug("#get model={}", model);
         }
 
         return "auth/notification-preferences";
@@ -59,21 +64,22 @@ public class NotificationPreferencesController {
 
     @PostMapping
     public String post(@AuthenticationPrincipal final OAuth2User principal,
-            @Validated final NotificationPreferencesForm form, final Model model) {
+            @Validated ImmutableNotificationPreferencesForm baseForm, final Model model) {
         final var tags = ghostApiService.getTags();
         final var authors = ghostApiService.getAuthors();
 
-        syncFormWithGhostData(form, tags, authors);
-        usersRepository.upsertPreferences(principal.getAttribute("id"), new UserPreferences.Value(form));
+        final NotificationPreferencesForm form = syncFormWithGhostData(baseForm, tags, authors);
+        usersRepository.upsertPreferences(principal.getAttribute("id"), ImmutableUserPreferences.ValueType.builder()
+                .all(form.all()).tags(form.tags()).authors(form.authors()).build());
 
         model.addAttribute("username", principal.getAttribute("username"));
-        model.addAttribute("tags", tags.tags);
-        model.addAttribute("authors", authors.authors);
+        model.addAttribute("tags", tags.tags());
+        model.addAttribute("authors", authors.authors());
         model.addAttribute("form", form);
         model.addAttribute("updated", Boolean.TRUE);
 
         if (logger.isDebugEnabled()) {
-            logger.debug("{}#post model={}", NotificationPreferencesController.class.getSimpleName(), model);
+            logger.debug("#post model={}", model);
         }
 
         return "auth/notification-preferences";
@@ -84,14 +90,17 @@ public class NotificationPreferencesController {
         return returnUrl;
     }
 
-    void syncFormWithGhostData(final NotificationPreferencesForm form, final Tags tags, final Authors authors) {
-        form.setTags(form.getTags().stream().filter(tag -> {
-            return tags.tags.stream().anyMatch(tagMaster -> tag.equals(tagMaster.id));
-        }).collect(Collectors.toList()));
-
-        form.setAuthors(form.getAuthors().stream().filter(author -> {
-            return authors.authors.stream().anyMatch(authorMaster -> author.equals(authorMaster.id));
-        }).collect(Collectors.toList()));
+    NotificationPreferencesForm syncFormWithGhostData(final NotificationPreferencesForm form, final Tags tags,
+            final Authors authors) {
+        return ImmutableNotificationPreferencesForm.builder() //
+                .all(form.all()) //
+                .tags(form.tags().stream().filter(tag -> {
+                    return tags.tags().stream().anyMatch(tagMaster -> tag.equals(tagMaster.id()));
+                }).collect(Collectors.toList())) //
+                .authors(form.authors().stream().filter(author -> {
+                    return authors.authors().stream().anyMatch(authorMaster -> author.equals(authorMaster.id()));
+                }).collect(Collectors.toList())) //
+                .build();
     }
 
 }

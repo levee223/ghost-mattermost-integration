@@ -1,6 +1,7 @@
 package app.service;
 
-import app.entity.api.ghost.SearchResult;
+import app.entity.api.ghost.search.ImmutableSearchResult;
+import app.entity.api.ghost.search.SearchResult;
 import app.entity.db.ghost.Post;
 import app.repository.db.ghost.SearchRepository;
 import app.util.Abbreviator;
@@ -68,15 +69,11 @@ public class GhostSearchService {
 
         final List<Post> posts = searchRepository.getPosts(searchKeywords, searchAuthors, searchTags);
 
-        final List<SearchResult> results = posts.stream().map(post -> {
-            final SearchResult result = new SearchResult();
-            result.title = post.title;
-            result.slug = post.slug;
-            result.summary = Abbreviator.abbreviate(StringUtils.remove(post.plaintext, '\n'), MAX_SUMMARY_LENGTH,
-                    searchKeywords);
-            result.updatedAt = post.updatedAt;
-            return result;
-        }).collect(Collectors.toList());
+        final List<SearchResult> results = posts.stream()
+                .map(post -> ImmutableSearchResult.builder().title(post.title()).slug(post.slug()).summary(Abbreviator
+                        .abbreviate(StringUtils.remove(post.plaintext(), '\n'), MAX_SUMMARY_LENGTH, searchKeywords))
+                        .updatedAt(post.updatedAt()).build())
+                .collect(Collectors.toList());
         return results;
     }
 

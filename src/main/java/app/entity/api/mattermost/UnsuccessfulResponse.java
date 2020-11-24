@@ -1,16 +1,23 @@
 package app.entity.api.mattermost;
 
-import app.util.ToStringBean;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import org.immutables.value.Value;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
+@Value.Immutable
+@JsonDeserialize(as = ImmutableUnsuccessfulResponse.class)
+public interface UnsuccessfulResponse {
 
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class UnsuccessfulResponse extends ToStringBean {
+    @JsonProperty("status_code")
+    String statusCode();
 
-    public String statusCode;
-    public String id;
-    public String message;
-    public String requestId;
+    @JsonProperty("id")
+    String id();
+
+    @JsonProperty("message")
+    String message();
+
+    @JsonProperty("request_id")
+    String requestId();
 
 }

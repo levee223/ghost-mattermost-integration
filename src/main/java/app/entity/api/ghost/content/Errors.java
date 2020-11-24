@@ -1,21 +1,26 @@
 package app.entity.api.ghost.content;
 
-import app.util.ToStringBean;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import org.immutables.value.Value;
 
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
-
-import java.util.Collections;
 import java.util.List;
 
-public class Errors extends ToStringBean {
+@Value.Immutable
+@JsonDeserialize(as = ImmutableErrors.class)
+public interface Errors {
 
-    @JsonSetter(nulls = Nulls.AS_EMPTY)
-    public List<Error> errors= Collections.emptyList();
+    @JsonProperty("errors")
+    List<Error> errors();
 
-    public static class Error extends ToStringBean {
-        public String message;
-        public String errorType;
+    @Value.Immutable
+    @JsonDeserialize(as = ImmutableError.class)
+    interface Error {
+        @JsonProperty("message")
+        String message();
+
+        @JsonProperty("errorType")
+        String errorType();
     }
 
 }

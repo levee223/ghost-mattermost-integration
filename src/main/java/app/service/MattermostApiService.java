@@ -48,15 +48,15 @@ public class MattermostApiService {
 
     public Optional<Pair<List<String>, PostEvent>> notifyUpdates(final List<String> targetUsers,
             final PostEvent postEvent) {
-        final String botUserId = getMe().id;
+        final String botUserId = getMe().id();
 
         List<String> failedUsers = null;
         for (final String targetUser : targetUsers) {
             String dmChannelId = null;
             String message = null;
             try {
-                dmChannelId = createDirectMessageChannel(botUserId, targetUser).id;
-                message = postEvent.post.current.url;
+                dmChannelId = createDirectMessageChannel(botUserId, targetUser).id();
+                message = postEvent.post().current().url();
                 createPost(dmChannelId, message);
             } catch (Exception ex) {
                 logger.error("Error occurred in notify updates. dmChannelId=" + dmChannelId, ex);
@@ -119,8 +119,8 @@ public class MattermostApiService {
 
     Request buildRequest(final String path, final Consumer<Request.Builder> additionalBuilder) {
         final Request.Builder builder = new Request.Builder();
-        builder.url(String.format("%s/api/v4%s", appConfig.getMattermost().getApi().getUrl(), path));
-        builder.header("Authorization", "Bearer " + appConfig.getMattermost().getApi().getAccessToken());
+        builder.url(String.format("%s/api/v4%s", appConfig.mattermost().api().url(), path));
+        builder.header("Authorization", "Bearer " + appConfig.mattermost().api().accessToken());
         if (additionalBuilder != null) {
             additionalBuilder.accept(builder);
         }

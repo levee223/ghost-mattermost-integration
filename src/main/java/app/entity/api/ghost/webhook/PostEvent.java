@@ -1,83 +1,55 @@
 package app.entity.api.ghost.webhook;
 
-import app.util.ToStringBean;
+import app.entity.api.ghost.Post;
 
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import org.immutables.value.Value;
 
-import java.util.Collections;
-import java.util.List;
+import java.time.OffsetDateTime;
+import java.util.Optional;
 
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class PostEvent extends ToStringBean {
+@Value.Immutable
+@Value.Enclosing
+@JsonDeserialize(as = ImmutablePostEvent.class)
+public interface PostEvent {
 
-    @JsonSetter(nulls = Nulls.FAIL)
-    public Post post;
+    @JsonProperty("post")
+    WrappedPost post();
 
-    @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-    public static class Post extends ToStringBean {
-        @JsonSetter(nulls = Nulls.FAIL)
-        public Current current;
+    @Value.Immutable
+    @JsonDeserialize(as = ImmutablePostEvent.WrappedPost.class)
+    interface WrappedPost {
+        @JsonProperty("current")
+        Post current();
 
-        public Previous previous;
+        @JsonProperty("previous")
+        Previous previous();
+    }
 
-        @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-        public static class Current extends ToStringBean {
-            @JsonSetter(nulls = Nulls.FAIL)
-            public String id;
+    @Value.Immutable
+    @JsonDeserialize(as = ImmutablePostEvent.Previous.class)
+    interface Previous {
+        @JsonProperty("mobiledoc")
+        Optional<String> mobiledoc();
 
-            @JsonSetter(nulls = Nulls.FAIL)
-            public String title;
+        @JsonProperty("status")
+        Optional<String> status();
 
-            public String slug;
-            public String plaintext;
-            public String publishedAt;
+        @JsonProperty("updated_at")
+        @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+        Optional<OffsetDateTime> updatedAt();
 
-            @JsonSetter(nulls = Nulls.AS_EMPTY)
-            public List<Author> authors = Collections.emptyList();
+        @JsonProperty("html")
+        Optional<String> html();
 
-            @JsonSetter(nulls = Nulls.AS_EMPTY)
-            public List<Tag> tags = Collections.emptyList();
+        @JsonProperty("plaintext")
+        Optional<String> plaintext();
 
-            @JsonSetter(nulls = Nulls.FAIL)
-            public String url;
-
-            public String excerpt;
-            public int readingTime;
-
-            @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-            public static class Author extends ToStringBean {
-                @JsonSetter(nulls = Nulls.FAIL)
-                public String id;
-
-                @JsonSetter(nulls = Nulls.FAIL)
-                public String name;
-
-                public String slug;
-                public String email;
-                public String url;
-            }
-
-            @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-            public static class Tag extends ToStringBean {
-                @JsonSetter(nulls = Nulls.FAIL)
-                public String id;
-                @JsonSetter(nulls = Nulls.FAIL)
-                public String name;
-
-                public String slug;
-                public String url;
-            }
-        }
-
-        @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-        public static class Previous extends ToStringBean {
-            public String status;
-            public String updatedAt;
-            public String publishedAt;
-        }
+        @JsonProperty("published_at")
+        @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+        Optional<OffsetDateTime> publishedAt();
     }
 
 }

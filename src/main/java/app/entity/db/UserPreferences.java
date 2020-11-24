@@ -1,35 +1,30 @@
 package app.entity.db;
 
-import app.entity.form.NotificationPreferencesForm;
-import app.util.ToStringBean;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import org.immutables.value.Value;
 
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
-
-import java.util.Collections;
 import java.util.List;
 
-public class UserPreferences extends ToStringBean {
+@Value.Immutable
+@Value.Enclosing
+public interface UserPreferences {
 
-    public String id;
-    public String value;
+    String id();
 
-    public static class Value extends ToStringBean {
-        public boolean all;
+    String value();
 
-        @JsonSetter(nulls = Nulls.AS_EMPTY)
-        public List<String> tags = Collections.emptyList();
+    @Value.Immutable
+    @JsonDeserialize(as = ImmutableUserPreferences.ValueType.class)
+    interface ValueType {
+        @JsonProperty("all")
+        boolean all();
 
-        @JsonSetter(nulls = Nulls.AS_EMPTY)
-        public List<String> authors = Collections.emptyList();
+        @JsonProperty("tags")
+        List<String> tags();
 
-        public Value() {}
-
-        public Value(NotificationPreferencesForm form) {
-            all = form.isAll();
-            tags = form.getTags();
-            authors = form.getAuthors();
-        }
+        @JsonProperty("authors")
+        List<String> authors();
     }
 
 }

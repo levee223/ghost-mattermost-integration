@@ -1,125 +1,68 @@
 package app.config;
 
-import app.util.ToStringBean;
+import app.util.ConfigurationPropertiesValueStyle;
 
+import org.immutables.value.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConstructorBinding;
-import org.springframework.validation.annotation.Validated;
-
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 @ConfigurationProperties(prefix = "app", ignoreUnknownFields = false)
-@ConstructorBinding
-@Validated
-public class ApplicationConfig extends ToStringBean {
+@Value.Immutable
+@Value.Enclosing
+@ConfigurationPropertiesValueStyle
+public abstract class ApplicationConfig {
 
-    @NotNull
-    private final Ghost ghost;
+    @ConstructorBinding
+    public ApplicationConfig() {}
 
-    @NotNull
-    private final Mattermost mattermost;
+    public abstract ImmutableApplicationConfig.Ghost ghost();
 
-    public ApplicationConfig(final Ghost ghost, final Mattermost mattermost) {
-        this.ghost = ghost;
-        this.mattermost = mattermost;
+    public abstract ImmutableApplicationConfig.Mattermost mattermost();
+
+    @Value.Immutable
+    public static abstract class Ghost {
+        @ConstructorBinding
+        public Ghost() {}
+
+        public abstract ImmutableApplicationConfig.GhostApi api();
+
+        public abstract ImmutableApplicationConfig.GhostOutgoingWebhook outgoingWebhook();
     }
 
-    public Ghost getGhost() {
-        return ghost;
+    @Value.Immutable
+    public static abstract class GhostApi {
+        @ConstructorBinding
+        public GhostApi() {}
+
+        public abstract String url();
+
+        public abstract String key();
     }
 
-    public Mattermost getMattermost() {
-        return mattermost;
+    @Value.Immutable
+    public static abstract class GhostOutgoingWebhook {
+        @ConstructorBinding
+        public GhostOutgoingWebhook() {}
+
+        public abstract String authorizedkey();
     }
 
-    public static class Ghost extends ToStringBean {
-        @NotNull
-        private final Api api;
+    @Value.Immutable
+    public static abstract class Mattermost {
+        @ConstructorBinding
+        public Mattermost() {}
 
-        @NotNull
-        private final OutgoingWebhook outgoingWebhook;
-
-        public Ghost(final Api api, final OutgoingWebhook outgoingWebhook) {
-            this.api = api;
-            this.outgoingWebhook = outgoingWebhook;
-        }
-
-        public Api getApi() {
-            return api;
-        }
-
-        public OutgoingWebhook getOutgoingWebhook() {
-            return outgoingWebhook;
-        }
-
-        public static class Api extends ToStringBean {
-            @NotEmpty
-            private final String url;
-
-            @NotEmpty
-            private final String key;
-
-            public Api(final String url, final String key) {
-                this.url = url;
-                this.key = key;
-            }
-
-            public String getUrl() {
-                return url;
-            }
-
-            public String getKey() {
-                return key;
-            }
-        }
-
-        public static class OutgoingWebhook extends ToStringBean {
-            @NotEmpty
-            private final String authorizedkey;
-
-            public OutgoingWebhook(final String authorizedkey) {
-                this.authorizedkey = authorizedkey;
-            }
-
-            public String getAuthorizedkey() {
-                return authorizedkey;
-            }
-        }
+        public abstract ImmutableApplicationConfig.MattermostApi api();
     }
 
-    public static class Mattermost extends ToStringBean {
-        @NotNull
-        private final Api api;
+    @Value.Immutable
+    public static abstract class MattermostApi {
+        @ConstructorBinding
+        public MattermostApi() {}
 
-        public Mattermost(final Api api) {
-            this.api = api;
-        }
+        public abstract String url();
 
-        public Api getApi() {
-            return api;
-        }
-
-        public static class Api extends ToStringBean {
-            @NotEmpty
-            private final String url;
-
-            @NotEmpty
-            private final String accessToken;
-
-            public Api(final String url, final String accessToken) {
-                this.url = url;
-                this.accessToken = accessToken;
-            }
-
-            public String getUrl() {
-                return url;
-            }
-
-            public String getAccessToken() {
-                return accessToken;
-            }
-        }
+        public abstract String accessToken();
     }
 
 }

@@ -24,6 +24,7 @@ import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayDeque;
+import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -54,24 +55,25 @@ public class GhostWebhookController {
         logger.debug("Ghost post.published: {}", postEvent);
 
         synchronized (postPublishedHistories) {
-            if (postPublishedHistories.contains(postEvent.post.current.id)) {
-                logger.warn("Ghost post.published duplicated: id={}, title={}", postEvent.post.current.id,
-                        postEvent.post.current.title);
+            if (postPublishedHistories.contains(postEvent.post().current().id())) {
+                logger.warn("Ghost post.published duplicated: id={}, title={}", postEvent.post().current().id(),
+                        postEvent.post().current().title());
                 return RESPONSE_OK;
             }
             if (postPublishedHistories.size() >= MAX_HISTORY) {
                 postPublishedHistories.removeFirst();
             }
-            postPublishedHistories.addLast(postEvent.post.current.id);
+            postPublishedHistories.addLast(postEvent.post().current().id());
         }
 
         List<String> targetUsers = null;
         try {
             targetUsers = usersRepository.getUserIds(preferences -> {
-                return preferences.all
-                        || postEvent.post.current.tags.stream().anyMatch(tag -> preferences.tags.contains(tag.id))
-                        || postEvent.post.current.authors.stream()
-                                .anyMatch(author -> preferences.authors.contains(author.id));
+                return preferences.all()
+                        || postEvent.post().current().tags().orElse(Collections.emptyList()).stream()
+                                .anyMatch(tag -> preferences.tags().contains(tag.id()))
+                        || postEvent.post().current().authors().orElse(Collections.emptyList()).stream()
+                                .anyMatch(author -> preferences.authors().contains(author.id()));
             });
             logger.debug("Ghost post.published targetUsers={}", targetUsers);
 
@@ -86,7 +88,7 @@ public class GhostWebhookController {
 
     @ModelAttribute(name = "key", binding = false)
     void validateKey(@RequestParam final String key) {
-        if (key == null || !appConfig.getGhost().getOutgoingWebhook().getAuthorizedkey().equals(key)) {
+        if (key == null || !appConfig.ghost().outgoingWebhook().authorizedkey().equals(key)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
     }

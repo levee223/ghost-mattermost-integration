@@ -1,15 +1,20 @@
 package app.entity.db.ghost;
 
-import app.util.ToStringBean;
+import org.immutables.value.Value;
 
 import java.sql.Timestamp;
 
-public class Post extends ToStringBean {
+@Value.Immutable
+public interface Post {
 
-    public String id;
-    public String title;
-    public String slug;
-    public String plaintext;
-    public Timestamp updatedAt;
+    String id();
+
+    String title();
+
+    String slug();
+
+    String plaintext();
+
+    Timestamp updatedAt();
 
 }
