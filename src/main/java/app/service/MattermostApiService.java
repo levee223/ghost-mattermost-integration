@@ -1,6 +1,6 @@
 package app.service;
 
-import app.connectivity.api.MattermostApiClient;
+import app.connectivity.web.MattermostApiClient;
 import app.data.api.ghost.webhook.PostEvent;
 import app.data.api.mattermost.CreateDirectMessageChannelResponse;
 import app.data.api.mattermost.CreatePostResponse;

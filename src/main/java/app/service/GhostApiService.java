@@ -1,6 +1,6 @@
 package app.service;
 
-import app.connectivity.api.GhostContentApiClient;
+import app.connectivity.web.GhostContentApiClient;
 import app.data.api.ghost.AuthorsResponse;
 import app.data.api.ghost.TagsResponse;
 

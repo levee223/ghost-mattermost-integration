@@ -1,4 +1,4 @@
-package app.connectivity.api;
+package app.connectivity.web;
 
 import app.config.GhostFeignConfiguration;
 import app.data.api.ghost.AuthorsResponse;

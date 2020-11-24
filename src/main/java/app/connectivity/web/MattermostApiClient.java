@@ -1,4 +1,4 @@
-package app.connectivity.api;
+package app.connectivity.web;
 
 import app.config.MattermostFeignConfiguration;
 import app.data.api.mattermost.CreateDirectMessageChannelResponse;
