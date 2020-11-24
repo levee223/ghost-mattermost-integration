@@ -59,8 +59,13 @@ abstract class ErrorHandler {
 
         if (ex instanceof ResponseStatusException) {
             status = ((ResponseStatusException) ex).getStatus();
-            message = ex.getMessage();
-            logger.warn("{}: {}", message, request);
+            if (status.is4xxClientError()) {
+                message = ex.getMessage();
+                logger.warn("{}: {}", message, request);
+            } else {
+                message = status.getReasonPhrase();
+                logger.error(String.format("%s: %s", message, request), ex);
+            }
         } else {
             final HttpStatus clientErrorHttpStatus = clientErrorMap.get(ex.getClass());
             if (clientErrorHttpStatus != null) {
