@@ -5,9 +5,7 @@
 .factorypath
 .project
 .recommenders/
-.settings/*
-!.settings/org.eclipse.jdt.core.prefs
-!.settings/org.eclipse.jdt.ui.prefs
+.settings/
 .sts4-cache/
 bin/
 
