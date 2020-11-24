@@ -1,8 +1,8 @@
 package app.controller.auth;
 
 import app.connectivity.db.UsersDao;
-import app.data.api.ghost.Authors;
-import app.data.api.ghost.Tags;
+import app.data.api.ghost.AuthorsResponse;
+import app.data.api.ghost.TagsResponse;
 import app.data.db.ImmutableUserPreferences;
 import app.data.db.UserPreferences;
 import app.data.form.ImmutableNotificationPreferencesForm;
@@ -90,8 +90,8 @@ public class NotificationPreferencesController {
         return returnUrl;
     }
 
-    NotificationPreferencesForm syncFormWithGhostData(final NotificationPreferencesForm form, final Tags tags,
-            final Authors authors) {
+    NotificationPreferencesForm syncFormWithGhostData(final NotificationPreferencesForm form, final TagsResponse tags,
+            final AuthorsResponse authors) {
         return ImmutableNotificationPreferencesForm.builder() //
                 .all(form.all()) //
                 .tags(form.tags().stream().filter(tag -> {

@@ -7,19 +7,11 @@ import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import okhttp3.OkHttpClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ComponentConfig {
-
-    @Bean
-    public OkHttpClient httpClient() {
-        final OkHttpClient httpClient = new OkHttpClient.Builder().followRedirects(false).followSslRedirects(false)
-                .retryOnConnectionFailure(true).build();
-        return httpClient;
-    }
 
     @Bean
     public JsonMapper jsonMapper() {

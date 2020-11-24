@@ -66,21 +66,18 @@ public class GhostWebhookController {
             postPublishedHistories.addLast(postEvent.post().current().id());
         }
 
-        List<String> targetUsers = null;
-        try {
-            targetUsers = usersDao.getUserIds(preferences -> {
-                return preferences.all()
-                        || postEvent.post().current().tags().orElse(Collections.emptyList()).stream()
-                                .anyMatch(tag -> preferences.tags().contains(tag.id()))
-                        || postEvent.post().current().authors().orElse(Collections.emptyList()).stream()
-                                .anyMatch(author -> preferences.authors().contains(author.id()));
-            });
-            logger.debug("Ghost post.published targetUsers={}", targetUsers);
+        final List<String> targetUsers = usersDao.getUserIds(preferences -> {
+            return preferences.all()
+                    || postEvent.post().current().tags().orElse(Collections.emptyList()).stream()
+                            .anyMatch(tag -> preferences.tags().contains(tag.id()))
+                    || postEvent.post().current().authors().orElse(Collections.emptyList()).stream()
+                            .anyMatch(author -> preferences.authors().contains(author.id()));
+        });
+        logger.debug("Ghost post.published targetUsers={}", targetUsers);
 
-            mattermostApiService.notifyUpdates(targetUsers, postEvent).ifPresent(retryQueue::add);
-        } catch (Exception ex) {
-            logger.error("Error occurred. postEvent=" + postEvent, ex);
-            retryQueue.add(new ImmutablePair<>(targetUsers, postEvent));
+        final List<String> retryableUsers = mattermostApiService.notifyUpdates(targetUsers, postEvent);
+        if (!retryableUsers.isEmpty()) {
+            retryQueue.add(new ImmutablePair<>(retryableUsers, postEvent));
         }
 
         return RESPONSE_OK;
@@ -105,11 +102,7 @@ public class GhostWebhookController {
             if (retryEvent == null) {
                 break;
             }
-            if (retryEvent.getLeft() == null) {
-                postPublished(retryEvent.getRight());
-            } else {
-                mattermostApiService.notifyUpdates(retryEvent.getLeft(), retryEvent.getRight());
-            }
+            mattermostApiService.notifyUpdates(retryEvent.getLeft(), retryEvent.getRight());
         }
     }
 

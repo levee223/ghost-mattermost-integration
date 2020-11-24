@@ -7,10 +7,10 @@ import org.immutables.value.Value;
 import java.util.List;
 
 @Value.Immutable
-@JsonDeserialize(as = ImmutableTags.class)
-public interface Tags {
+@JsonDeserialize(as = ImmutableAuthorsResponse.class)
+public interface AuthorsResponse {
 
-    @JsonProperty("tags")
-    List<Tag> tags();
+    @JsonProperty("authors")
+    List<Author> authors();
 
 }

@@ -37,6 +37,12 @@ public abstract class ApplicationConfig {
         public abstract String url();
 
         public abstract String key();
+
+        public abstract long retryPeriodMillis();
+
+        public abstract long retryMaxPeriodMillis();
+
+        public abstract int retryMaxAttempts();
     }
 
     @Value.Immutable
@@ -63,6 +69,12 @@ public abstract class ApplicationConfig {
         public abstract String url();
 
         public abstract String accessToken();
+
+        public abstract long retryPeriodMillis();
+
+        public abstract long retryMaxPeriodMillis();
+
+        public abstract int retryMaxAttempts();
     }
 
 }
