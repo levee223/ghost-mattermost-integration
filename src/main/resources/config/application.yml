@@ -50,11 +50,6 @@ spring:
   thymeleaf:
     cache: false
 
-logging:
-  level:
-    app: DEBUG
-  pattern:
-    console: "%-5p %d{HH:mm:ss.SSS} [%t] %c{0} - %m%n"
 
 app:
   ghost:
@@ -76,8 +71,3 @@ spring:
   thymeleaf:
     cache: true
 
-logging:
-  level:
-    app: INFO
-  pattern:
-    console: "%-5p %d [%t] %c{0} - %m%n"
