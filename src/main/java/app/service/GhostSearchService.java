@@ -8,7 +8,7 @@ import app.util.Abbreviator;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.TreeMap;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-@Service
+@Component
 public class GhostSearchService {
 
     private static final Pattern searchQueryPattern = Pattern.compile("\"([^\"]+)\"|([^\\s]+)");

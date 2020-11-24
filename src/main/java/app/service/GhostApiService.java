@@ -5,11 +5,11 @@ import app.data.api.ghost.AuthorsResponse;
 import app.data.api.ghost.TagsResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 
-@Service
+@Component
 public class GhostApiService {
 
     @Autowired
