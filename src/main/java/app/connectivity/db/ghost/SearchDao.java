@@ -1,4 +1,4 @@
-package app.repository.db.ghost;
+package app.connectivity.db.ghost;
 
 import app.config.GhostDataSourceConfig;
 import app.data.db.ghost.ImmutablePost;
@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -17,10 +17,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-@Repository
-public class SearchRepository {
+@Component
+public class SearchDao {
 
-    private static final Logger logger = LoggerFactory.getLogger(SearchRepository.class);
+    private static final Logger logger = LoggerFactory.getLogger(SearchDao.class);
 
     @Autowired
     @Qualifier(GhostDataSourceConfig.JDBC_TEMPLATE_NAME)

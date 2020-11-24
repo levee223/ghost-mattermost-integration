@@ -1,8 +1,8 @@
 package app.controller.api.ghost;
 
 import app.config.ApplicationConfig;
+import app.connectivity.db.UsersDao;
 import app.data.api.ghost.webhook.PostEvent;
-import app.repository.db.UsersRepository;
 import app.service.MattermostApiService;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -42,7 +42,7 @@ public class GhostWebhookController {
     ApplicationConfig appConfig;
 
     @Autowired
-    UsersRepository usersRepository;
+    UsersDao usersDao;
 
     @Autowired
     MattermostApiService mattermostApiService;
@@ -68,7 +68,7 @@ public class GhostWebhookController {
 
         List<String> targetUsers = null;
         try {
-            targetUsers = usersRepository.getUserIds(preferences -> {
+            targetUsers = usersDao.getUserIds(preferences -> {
                 return preferences.all()
                         || postEvent.post().current().tags().orElse(Collections.emptyList()).stream()
                                 .anyMatch(tag -> preferences.tags().contains(tag.id()))

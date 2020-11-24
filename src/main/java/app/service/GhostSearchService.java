@@ -1,9 +1,9 @@
 package app.service;
 
+import app.connectivity.db.ghost.SearchDao;
 import app.data.api.ghost.search.ImmutableSearchResult;
 import app.data.api.ghost.search.SearchResult;
 import app.data.db.ghost.Post;
-import app.repository.db.ghost.SearchRepository;
 import app.util.Abbreviator;
 
 import org.apache.commons.lang3.StringUtils;
@@ -25,7 +25,7 @@ public class GhostSearchService {
     private static final int MAX_SUMMARY_LENGTH = 200;
 
     @Autowired
-    SearchRepository searchRepository;
+    SearchDao searchDao;
 
     public List<SearchResult> searchPosts(final String searchQuery) {
         final var searchTexts = new ArrayList<String>();
@@ -46,9 +46,9 @@ public class GhostSearchService {
         final var searchAuthors = new ArrayList<String>();
         final var searchTags = new ArrayList<String>();
 
-        final Map<String, String> authorsNameIdMap = searchRepository
+        final Map<String, String> authorsNameIdMap = searchDao
                 .getAuthorsWithNameIdMap(() -> new TreeMap<>(String.CASE_INSENSITIVE_ORDER));
-        final Map<String, String> tagsNameIdMap = searchRepository
+        final Map<String, String> tagsNameIdMap = searchDao
                 .getTagsWithNameIdMap(() -> new TreeMap<>(String.CASE_INSENSITIVE_ORDER));
 
         new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
@@ -67,7 +67,7 @@ public class GhostSearchService {
             searchKeywords.add(searchText);
         });
 
-        final List<Post> posts = searchRepository.getPosts(searchKeywords, searchAuthors, searchTags);
+        final List<Post> posts = searchDao.getPosts(searchKeywords, searchAuthors, searchTags);
 
         final List<SearchResult> results = posts.stream()
                 .map(post -> ImmutableSearchResult.builder().title(post.title()).slug(post.slug()).summary(Abbreviator

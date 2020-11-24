@@ -1,4 +1,4 @@
-package app.repository.db;
+package app.connectivity.db;
 
 import app.data.db.UserPreferences;
 import app.util.JsonMapper;
@@ -6,7 +6,7 @@ import app.util.JsonMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-@Repository
-public class UsersRepository {
+@Component
+public class UsersDao {
 
     @Autowired
     JdbcTemplate jdbcTemplate;

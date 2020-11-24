@@ -1,12 +1,12 @@
 package app.controller.auth;
 
+import app.connectivity.db.UsersDao;
 import app.data.api.ghost.Authors;
 import app.data.api.ghost.Tags;
 import app.data.db.ImmutableUserPreferences;
 import app.data.db.UserPreferences;
 import app.data.form.ImmutableNotificationPreferencesForm;
 import app.data.form.NotificationPreferencesForm;
-import app.repository.db.UsersRepository;
 import app.service.GhostApiService;
 
 import org.slf4j.Logger;
@@ -36,14 +36,14 @@ public class NotificationPreferencesController {
     GhostApiService ghostApiService;
 
     @Autowired
-    UsersRepository usersRepository;
+    UsersDao usersDao;
 
     @GetMapping
     public String get(@AuthenticationPrincipal final OAuth2User principal, final Model model) {
         final var tags = ghostApiService.getTags();
         final var authors = ghostApiService.getAuthors();
 
-        final Optional<UserPreferences.ValueType> userPrefeerences = usersRepository
+        final Optional<UserPreferences.ValueType> userPrefeerences = usersDao
                 .getPreferences(principal.getAttribute("id"));
         final NotificationPreferencesForm form = userPrefeerences
                 .map(prefs -> ImmutableNotificationPreferencesForm.builder().all(prefs.all()).tags(prefs.tags())
@@ -69,7 +69,7 @@ public class NotificationPreferencesController {
         final var authors = ghostApiService.getAuthors();
 
         final NotificationPreferencesForm form = syncFormWithGhostData(baseForm, tags, authors);
-        usersRepository.upsertPreferences(principal.getAttribute("id"), ImmutableUserPreferences.ValueType.builder()
+        usersDao.upsertPreferences(principal.getAttribute("id"), ImmutableUserPreferences.ValueType.builder()
                 .all(form.all()).tags(form.tags()).authors(form.authors()).build());
 
         model.addAttribute("username", principal.getAttribute("username"));
