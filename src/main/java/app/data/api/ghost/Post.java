@@ -1,4 +1,4 @@
-package app.entity.api.ghost;
+package app.data.api.ghost;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;

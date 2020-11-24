@@ -1,4 +1,4 @@
 @FormValueStyle
-package app.entity.form;
+package app.data.form;
 
 import app.util.FormValueStyle;

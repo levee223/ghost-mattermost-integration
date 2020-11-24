@@ -1,4 +1,4 @@
-package app.entity.db;
+package app.data.db;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;

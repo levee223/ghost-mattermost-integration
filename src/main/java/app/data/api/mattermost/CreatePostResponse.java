@@ -1,16 +1,14 @@
-package app.entity.api.ghost;
+package app.data.api.mattermost;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.immutables.value.Value;
 
-import java.util.List;
-
 @Value.Immutable
-@JsonDeserialize(as = ImmutableTags.class)
-public interface Tags {
+@JsonDeserialize(as = ImmutableCreatePostResponse.class)
+public interface CreatePostResponse {
 
-    @JsonProperty("tags")
-    List<Tag> tags();
+    @JsonProperty("id")
+    String id();
 
 }

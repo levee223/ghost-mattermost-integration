@@ -1,6 +1,6 @@
 package app.controller.api.ghost;
 
-import app.entity.api.ghost.search.SearchResult;
+import app.data.api.ghost.search.SearchResult;
 import app.service.GhostSearchService;
 
 import org.slf4j.Logger;

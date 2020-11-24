@@ -1,4 +1,4 @@
 @DefaultValueStyle
-package app.entity;
+package app.data;
 
 import app.util.DefaultValueStyle;

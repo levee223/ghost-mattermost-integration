@@ -1,4 +1,4 @@
-package app.entity.db.ghost;
+package app.data.db.ghost;
 
 import org.immutables.value.Value;
 

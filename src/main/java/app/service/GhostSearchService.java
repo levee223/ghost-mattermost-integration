@@ -1,8 +1,8 @@
 package app.service;
 
-import app.entity.api.ghost.search.ImmutableSearchResult;
-import app.entity.api.ghost.search.SearchResult;
-import app.entity.db.ghost.Post;
+import app.data.api.ghost.search.ImmutableSearchResult;
+import app.data.api.ghost.search.SearchResult;
+import app.data.db.ghost.Post;
 import app.repository.db.ghost.SearchRepository;
 import app.util.Abbreviator;
 

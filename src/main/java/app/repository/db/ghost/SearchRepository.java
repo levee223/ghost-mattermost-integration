@@ -1,8 +1,8 @@
 package app.repository.db.ghost;
 
 import app.config.GhostDataSourceConfig;
-import app.entity.db.ghost.ImmutablePost;
-import app.entity.db.ghost.Post;
+import app.data.db.ghost.ImmutablePost;
+import app.data.db.ghost.Post;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

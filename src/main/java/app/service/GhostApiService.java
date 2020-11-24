@@ -1,9 +1,9 @@
 package app.service;
 
 import app.config.ApplicationConfig;
-import app.entity.api.ghost.Authors;
-import app.entity.api.ghost.Tags;
-import app.entity.api.ghost.content.Errors;
+import app.data.api.ghost.Authors;
+import app.data.api.ghost.Tags;
+import app.data.api.ghost.content.Errors;
 import app.util.JsonMapper;
 
 import okhttp3.OkHttpClient;

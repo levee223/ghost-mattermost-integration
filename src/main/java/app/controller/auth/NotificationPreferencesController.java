@@ -1,11 +1,11 @@
 package app.controller.auth;
 
-import app.entity.api.ghost.Authors;
-import app.entity.api.ghost.Tags;
-import app.entity.db.ImmutableUserPreferences;
-import app.entity.db.UserPreferences;
-import app.entity.form.ImmutableNotificationPreferencesForm;
-import app.entity.form.NotificationPreferencesForm;
+import app.data.api.ghost.Authors;
+import app.data.api.ghost.Tags;
+import app.data.db.ImmutableUserPreferences;
+import app.data.db.UserPreferences;
+import app.data.form.ImmutableNotificationPreferencesForm;
+import app.data.form.NotificationPreferencesForm;
 import app.repository.db.UsersRepository;
 import app.service.GhostApiService;
 

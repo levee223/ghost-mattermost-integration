@@ -1,4 +1,4 @@
-package app.entity.form;
+package app.data.form;
 
 import org.immutables.value.Value;
 

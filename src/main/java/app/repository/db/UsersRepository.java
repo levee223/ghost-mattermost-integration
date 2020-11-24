@@ -1,6 +1,6 @@
 package app.repository.db;
 
-import app.entity.db.UserPreferences;
+import app.data.db.UserPreferences;
 import app.util.JsonMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;

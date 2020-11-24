@@ -1,11 +1,11 @@
 package app.service;
 
 import app.config.ApplicationConfig;
-import app.entity.api.ghost.webhook.PostEvent;
-import app.entity.api.mattermost.CreateDirectMessageChannelResponse;
-import app.entity.api.mattermost.CreatePostResponse;
-import app.entity.api.mattermost.GetMeResponse;
-import app.entity.api.mattermost.UnsuccessfulResponse;
+import app.data.api.ghost.webhook.PostEvent;
+import app.data.api.mattermost.CreateDirectMessageChannelResponse;
+import app.data.api.mattermost.CreatePostResponse;
+import app.data.api.mattermost.GetMeResponse;
+import app.data.api.mattermost.UnsuccessfulResponse;
 import app.util.JsonMapper;
 
 import okhttp3.MediaType;

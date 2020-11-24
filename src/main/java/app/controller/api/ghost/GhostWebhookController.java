@@ -1,7 +1,7 @@
 package app.controller.api.ghost;
 
 import app.config.ApplicationConfig;
-import app.entity.api.ghost.webhook.PostEvent;
+import app.data.api.ghost.webhook.PostEvent;
 import app.repository.db.UsersRepository;
 import app.service.MattermostApiService;
 

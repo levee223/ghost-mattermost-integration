@@ -1,6 +1,6 @@
-package app.entity.api.ghost.webhook;
+package app.data.api.ghost.webhook;
 
-import app.entity.api.ghost.Post;
+import app.data.api.ghost.Post;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -1,14 +1,14 @@
-package app.entity.api.mattermost;
+package app.data.api.ghost;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.immutables.value.Value;
 
 @Value.Immutable
-@JsonDeserialize(as = ImmutableGetMeResponse.class)
-public interface GetMeResponse {
+@JsonDeserialize(as = ImmutableCount.class)
+public interface Count {
 
-    @JsonProperty("id")
-    String id();
+    @JsonProperty("posts")
+    int posts();
 
 }
