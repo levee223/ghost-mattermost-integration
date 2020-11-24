@@ -20,7 +20,7 @@ public abstract class ApplicationConfig {
     public abstract ImmutableApplicationConfig.Mattermost mattermost();
 
     @Value.Immutable
-    public static abstract class Ghost {
+    public abstract static class Ghost {
         @ConstructorBinding
         public Ghost() {}
 
@@ -30,7 +30,7 @@ public abstract class ApplicationConfig {
     }
 
     @Value.Immutable
-    public static abstract class GhostApi {
+    public abstract static class GhostApi {
         @ConstructorBinding
         public GhostApi() {}
 
@@ -40,7 +40,7 @@ public abstract class ApplicationConfig {
     }
 
     @Value.Immutable
-    public static abstract class GhostOutgoingWebhook {
+    public abstract static class GhostOutgoingWebhook {
         @ConstructorBinding
         public GhostOutgoingWebhook() {}
 
@@ -48,7 +48,7 @@ public abstract class ApplicationConfig {
     }
 
     @Value.Immutable
-    public static abstract class Mattermost {
+    public abstract static class Mattermost {
         @ConstructorBinding
         public Mattermost() {}
 
@@ -56,7 +56,7 @@ public abstract class ApplicationConfig {
     }
 
     @Value.Immutable
-    public static abstract class MattermostApi {
+    public abstract static class MattermostApi {
         @ConstructorBinding
         public MattermostApi() {}
 
