@@ -7,7 +7,7 @@ import app.data.connectivity.web.ghost.content.response.TagsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 @Component
 public class GhostApiService {
@@ -16,11 +16,14 @@ public class GhostApiService {
     GhostContentApiClient apiClient;
 
     public TagsResponse getTags() {
-        return apiClient.getTags(Arrays.asList("count.posts"), null, null, "all", null, "count.posts%20desc").getBody();
+        return apiClient
+                .getTags(Collections.singletonList("count.posts"), null, null, "all", null, "count.posts%20desc")
+                .getBody();
     }
 
     public AuthorsResponse getAuthors() {
-        return apiClient.getAuthors(Arrays.asList("count.posts"), null, null, "all", null, "count.posts%20desc")
+        return apiClient
+                .getAuthors(Collections.singletonList("count.posts"), null, null, "all", null, "count.posts%20desc")
                 .getBody();
     }
 

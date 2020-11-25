@@ -69,12 +69,11 @@ public class GhostSearchService {
 
         final List<Post> posts = searchDao.getPosts(searchKeywords, searchAuthors, searchTags);
 
-        final List<SearchResult> results = posts.stream()
+        return posts.stream()
                 .map(post -> ImmutableSearchResult.builder().title(post.title()).slug(post.slug()).summary(Abbreviator
                         .abbreviate(StringUtils.remove(post.plaintext(), '\n'), MAX_SUMMARY_LENGTH, searchKeywords))
                         .updatedAt(post.updatedAt()).build())
                 .collect(Collectors.toList());
-        return results;
     }
 
 }

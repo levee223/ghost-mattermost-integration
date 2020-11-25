@@ -13,9 +13,7 @@ public class RestExceptionHandler extends ErrorHandler {
 
     @ExceptionHandler({HttpRequestMethodNotSupportedException.class, Exception.class})
     public ResponseEntity<ErrorResponse> handle(final Exception ex, final WebRequest request) {
-        return handle(ex, request, (status, errorResponse) -> {
-            return new ResponseEntity<ErrorResponse>(errorResponse, status);
-        });
+        return handle(ex, request, (status, errorResponse) -> new ResponseEntity<>(errorResponse, status));
     }
 
 }

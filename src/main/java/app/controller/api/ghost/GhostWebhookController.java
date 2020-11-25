@@ -47,8 +47,8 @@ public class GhostWebhookController {
     @Autowired
     MattermostApiService mattermostApiService;
 
-    Deque<String> postPublishedHistories = new ArrayDeque<>(MAX_HISTORY);
-    ConcurrentLinkedQueue<Pair<List<String>, PostEvent>> retryQueue = new ConcurrentLinkedQueue<>();
+    final Deque<String> postPublishedHistories = new ArrayDeque<>(MAX_HISTORY);
+    final ConcurrentLinkedQueue<Pair<List<String>, PostEvent>> retryQueue = new ConcurrentLinkedQueue<>();
 
     @PostMapping("/post.published")
     public String postPublished(@RequestBody final PostEvent postEvent) {
@@ -66,13 +66,11 @@ public class GhostWebhookController {
             postPublishedHistories.addLast(postEvent.post().current().id());
         }
 
-        final List<String> targetUsers = usersDao.getUserIds(preferences -> {
-            return preferences.all()
-                    || postEvent.post().current().tags().orElse(Collections.emptyList()).stream()
-                            .anyMatch(tag -> preferences.tags().contains(tag.id()))
-                    || postEvent.post().current().authors().orElse(Collections.emptyList()).stream()
-                            .anyMatch(author -> preferences.authors().contains(author.id()));
-        });
+        final List<String> targetUsers = usersDao.getUserIds(preferences -> preferences.all()
+                || postEvent.post().current().tags().orElse(Collections.emptyList()).stream()
+                        .anyMatch(tag -> preferences.tags().contains(tag.id()))
+                || postEvent.post().current().authors().orElse(Collections.emptyList()).stream()
+                        .anyMatch(author -> preferences.authors().contains(author.id())));
         logger.debug("Ghost post.published targetUsers={}", targetUsers);
 
         final List<String> retryableUsers = mattermostApiService.notifyUpdates(targetUsers, postEvent);
@@ -85,7 +83,7 @@ public class GhostWebhookController {
 
     @ModelAttribute(name = "key", binding = false)
     void validateKey(@RequestParam final String key) {
-        if (key == null || !appConfig.ghost().outgoingWebhook().authorizedkey().equals(key)) {
+        if (key == null || !appConfig.ghost().outgoingWebhook().authorizedKey().equals(key)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
     }

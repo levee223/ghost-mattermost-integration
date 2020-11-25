@@ -43,9 +43,9 @@ public class NotificationPreferencesController {
         final var tags = ghostApiService.getTags();
         final var authors = ghostApiService.getAuthors();
 
-        final Optional<UserPreferences.ValueType> userPrefeerences = usersDao
+        final Optional<UserPreferences.ValueType> userPreferences = usersDao
                 .getPreferences(principal.getAttribute("id"));
-        final NotificationPreferencesForm form = userPrefeerences
+        final NotificationPreferencesForm form = userPreferences
                 .map(prefs -> ImmutableNotificationPreferencesForm.builder().all(prefs.all()).tags(prefs.tags())
                         .authors(prefs.authors()).build())
                 .orElseGet(() -> ImmutableNotificationPreferencesForm.builder().build());
@@ -92,14 +92,13 @@ public class NotificationPreferencesController {
 
     NotificationPreferencesForm syncFormWithGhostData(final NotificationPreferencesForm form, final TagsResponse tags,
             final AuthorsResponse authors) {
-        return ImmutableNotificationPreferencesForm.builder() //
-                .all(form.all()) //
-                .tags(form.tags().stream().filter(tag -> {
-                    return tags.tags().stream().anyMatch(tagMaster -> tag.equals(tagMaster.id()));
-                }).collect(Collectors.toList())) //
-                .authors(form.authors().stream().filter(author -> {
-                    return authors.authors().stream().anyMatch(authorMaster -> author.equals(authorMaster.id()));
-                }).collect(Collectors.toList())) //
+        return ImmutableNotificationPreferencesForm.builder().all(form.all())
+                .tags(form.tags().stream()
+                        .filter(tag -> tags.tags().stream().anyMatch(tagMaster -> tag.equals(tagMaster.id())))
+                        .collect(Collectors.toList()))
+                .authors(form.authors().stream().filter(
+                        author -> authors.authors().stream().anyMatch(authorMaster -> author.equals(authorMaster.id())))
+                        .collect(Collectors.toList()))
                 .build();
     }
 

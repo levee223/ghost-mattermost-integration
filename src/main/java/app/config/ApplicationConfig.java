@@ -50,7 +50,7 @@ public abstract class ApplicationConfig {
         @ConstructorBinding
         public GhostOutgoingWebhook() {}
 
-        public abstract String authorizedkey();
+        public abstract String authorizedKey();
     }
 
     @Value.Immutable

@@ -1,5 +1,7 @@
 package app.controller;
 
+import static java.util.Map.entry;
+
 import app.data.controller.response.ErrorResponse;
 import app.data.controller.response.ImmutableErrorResponse;
 
@@ -23,8 +25,6 @@ import org.springframework.web.multipart.support.MissingServletRequestPartExcept
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.function.BiFunction;
@@ -33,25 +33,21 @@ abstract class ErrorHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(ErrorHandler.class);
 
-    private static final Map<Class<? extends Exception>, HttpStatus> clientErrorMap;
-    static {
-        final var m = new HashMap<Class<? extends Exception>, HttpStatus>();
-        m.put(HttpRequestMethodNotSupportedException.class, HttpStatus.METHOD_NOT_ALLOWED);
-        m.put(HttpMediaTypeNotSupportedException.class, HttpStatus.UNSUPPORTED_MEDIA_TYPE);
-        m.put(HttpMediaTypeNotAcceptableException.class, HttpStatus.NOT_ACCEPTABLE);
-        m.put(MissingPathVariableException.class, HttpStatus.BAD_REQUEST);
-        m.put(MissingServletRequestParameterException.class, HttpStatus.BAD_REQUEST);
-        m.put(ServletRequestBindingException.class, HttpStatus.BAD_REQUEST);
-        m.put(ConversionNotSupportedException.class, HttpStatus.BAD_REQUEST);
-        m.put(TypeMismatchException.class, HttpStatus.BAD_REQUEST);
-        m.put(HttpMessageNotReadableException.class, HttpStatus.BAD_REQUEST);
-        m.put(HttpMessageNotWritableException.class, HttpStatus.BAD_REQUEST);
-        m.put(MethodArgumentNotValidException.class, HttpStatus.BAD_REQUEST);
-        m.put(MissingServletRequestPartException.class, HttpStatus.BAD_REQUEST);
-        m.put(BindException.class, HttpStatus.BAD_REQUEST);
-        m.put(NoHandlerFoundException.class, HttpStatus.NOT_FOUND);
-        clientErrorMap = Collections.unmodifiableMap(m);
-    }
+    private static final Map<Class<? extends Exception>, HttpStatus> clientErrorMap = Map.ofEntries(
+            entry(HttpRequestMethodNotSupportedException.class, HttpStatus.METHOD_NOT_ALLOWED),
+            entry(HttpMediaTypeNotSupportedException.class, HttpStatus.UNSUPPORTED_MEDIA_TYPE),
+            entry(HttpMediaTypeNotAcceptableException.class, HttpStatus.NOT_ACCEPTABLE),
+            entry(MissingPathVariableException.class, HttpStatus.BAD_REQUEST),
+            entry(MissingServletRequestParameterException.class, HttpStatus.BAD_REQUEST),
+            entry(ServletRequestBindingException.class, HttpStatus.BAD_REQUEST),
+            entry(ConversionNotSupportedException.class, HttpStatus.BAD_REQUEST),
+            entry(TypeMismatchException.class, HttpStatus.BAD_REQUEST),
+            entry(HttpMessageNotReadableException.class, HttpStatus.BAD_REQUEST),
+            entry(HttpMessageNotWritableException.class, HttpStatus.BAD_REQUEST),
+            entry(MethodArgumentNotValidException.class, HttpStatus.BAD_REQUEST),
+            entry(MissingServletRequestPartException.class, HttpStatus.BAD_REQUEST),
+            entry(BindException.class, HttpStatus.BAD_REQUEST),
+            entry(NoHandlerFoundException.class, HttpStatus.NOT_FOUND));
 
     protected <T> T handle(final Exception ex, final WebRequest request,
             final BiFunction<HttpStatus, ErrorResponse, T> responseFactory) {

@@ -71,7 +71,7 @@ app:
       retryMaxPeriodMillis: 1000
       retryMaxAttempts: 4
     outgoingWebhook:
-      authorizedkey: r2vpgz6scd7kfv9rshs9w4s62x
+      authorizedKey: r2vpgz6scd7kfv9rshs9w4s62x
   mattermost:
     api:
       url: "http://localhost:8065"
