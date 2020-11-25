@@ -1,5 +1,7 @@
 package app.controller;
 
+import app.data.controller.response.ErrorResponse;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;

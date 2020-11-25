@@ -2,7 +2,7 @@ package app.controller.api.ghost;
 
 import app.config.ApplicationConfig;
 import app.connectivity.db.UsersDao;
-import app.data.api.ghost.webhook.PostEvent;
+import app.data.connectivity.web.ghost.webhook.PostEvent;
 import app.service.MattermostApiService;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;

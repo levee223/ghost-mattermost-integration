@@ -16,7 +16,7 @@ public class WebExceptionHandler extends ErrorHandler {
             mav.setStatus(status);
             mav.addObject("status", status.value());
             mav.addObject("error", status.getReasonPhrase());
-            mav.addObject("message", "Error ID: " + errorResponse.getId());
+            mav.addObject("message", "Error ID: " + errorResponse.id());
             return mav;
         });
     }

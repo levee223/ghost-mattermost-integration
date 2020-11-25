@@ -1,11 +1,11 @@
 package app.service;
 
-import app.connectivity.web.MattermostApiClient;
-import app.data.api.ghost.webhook.PostEvent;
-import app.data.api.mattermost.CreateDirectMessageChannelResponse;
-import app.data.api.mattermost.CreatePostResponse;
-import app.data.api.mattermost.GetMeResponse;
-import app.data.api.mattermost.ImmutableCreatePostRequest;
+import app.connectivity.web.mattermost.MattermostApiClient;
+import app.data.connectivity.web.ghost.webhook.PostEvent;
+import app.data.connectivity.web.mattermost.request.ImmutableCreatePostRequest;
+import app.data.connectivity.web.mattermost.response.CreateDirectMessageChannelResponse;
+import app.data.connectivity.web.mattermost.response.CreatePostResponse;
+import app.data.connectivity.web.mattermost.response.GetMeResponse;
 
 import feign.FeignException;
 import org.slf4j.Logger;

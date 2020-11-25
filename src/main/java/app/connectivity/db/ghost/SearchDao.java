@@ -1,8 +1,8 @@
 package app.connectivity.db.ghost;
 
 import app.config.GhostDataSourceConfig;
-import app.data.db.ghost.ImmutablePost;
-import app.data.db.ghost.Post;
+import app.data.connectivity.db.ghost.ImmutablePost;
+import app.data.connectivity.db.ghost.Post;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,8 +1,8 @@
 package app.service;
 
-import app.connectivity.web.GhostContentApiClient;
-import app.data.api.ghost.AuthorsResponse;
-import app.data.api.ghost.TagsResponse;
+import app.connectivity.web.ghost.GhostContentApiClient;
+import app.data.connectivity.web.ghost.content.response.AuthorsResponse;
+import app.data.connectivity.web.ghost.content.response.TagsResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,7 @@
 package app.controller;
 
-import app.util.ToStringBean;
+import app.data.controller.response.ErrorResponse;
+import app.data.controller.response.ImmutableErrorResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,30 +80,12 @@ abstract class ErrorHandler {
             }
         }
 
-        final ErrorResponse errorResponse = new ErrorResponse(createErrorId(), message);
-        return responseFactory.apply(status, errorResponse);
+        return responseFactory.apply(status,
+                ImmutableErrorResponse.builder().id(createErrorId()).message(message).build());
     }
 
     protected String createErrorId() {
         return UUID.randomUUID().toString();
-    }
-
-    class ErrorResponse extends ToStringBean {
-        private final String id;
-        private final String message;
-
-        public ErrorResponse(String id, String message) {
-            this.id = id;
-            this.message = message;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public String getMessage() {
-            return message;
-        }
     }
 
 }

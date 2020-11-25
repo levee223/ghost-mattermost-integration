@@ -14,7 +14,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableConfigurationProperties({ImmutableApplicationConfig.class})
 @EnableScheduling
-@EnableFeignClients("app.connectivity.api")
+@EnableFeignClients
 @EnableCaching
 public class Application {
 

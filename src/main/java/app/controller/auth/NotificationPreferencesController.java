@@ -1,12 +1,12 @@
 package app.controller.auth;
 
 import app.connectivity.db.UsersDao;
-import app.data.api.ghost.AuthorsResponse;
-import app.data.api.ghost.TagsResponse;
-import app.data.db.ImmutableUserPreferences;
-import app.data.db.UserPreferences;
-import app.data.form.ImmutableNotificationPreferencesForm;
-import app.data.form.NotificationPreferencesForm;
+import app.data.connectivity.db.app.ImmutableUserPreferences;
+import app.data.connectivity.db.app.UserPreferences;
+import app.data.connectivity.web.ghost.content.response.AuthorsResponse;
+import app.data.connectivity.web.ghost.content.response.TagsResponse;
+import app.data.controller.request.ImmutableNotificationPreferencesForm;
+import app.data.controller.request.NotificationPreferencesForm;
 import app.service.GhostApiService;
 
 import org.slf4j.Logger;

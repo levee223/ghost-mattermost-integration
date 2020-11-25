@@ -1,9 +1,9 @@
 package app.service;
 
 import app.connectivity.db.ghost.SearchDao;
-import app.data.api.ghost.search.ImmutableSearchResult;
-import app.data.api.ghost.search.SearchResult;
-import app.data.db.ghost.Post;
+import app.data.connectivity.db.ghost.Post;
+import app.data.connectivity.web.ghost.search.ImmutableSearchResult;
+import app.data.connectivity.web.ghost.search.SearchResult;
 import app.util.Abbreviator;
 
 import org.apache.commons.lang3.StringUtils;
