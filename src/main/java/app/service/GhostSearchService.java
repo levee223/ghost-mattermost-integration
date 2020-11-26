@@ -2,7 +2,9 @@ package app.service;
 
 import app.connectivity.db.ghost.SearchDao;
 import app.data.connectivity.db.ghost.Post;
+import app.data.connectivity.web.ghost.search.ImmutableMatchedPost;
 import app.data.connectivity.web.ghost.search.ImmutableSearchResult;
+import app.data.connectivity.web.ghost.search.MatchedPost;
 import app.data.connectivity.web.ghost.search.SearchResult;
 import app.util.SimpleAbbreviator;
 
@@ -27,7 +29,7 @@ public class GhostSearchService {
     @Autowired
     SearchDao searchDao;
 
-    public List<SearchResult> searchPosts(final String searchQuery) {
+    public SearchResult searchPosts(final String searchQuery) {
         final var searchTexts = new ArrayList<String>();
         final var searchQueryMatcher = searchQueryPattern.matcher(searchQuery);
         while (searchQueryMatcher.find()) {
@@ -37,11 +39,10 @@ public class GhostSearchService {
                 searchTexts.add(searchText);
             }
         }
-
         return searchPosts(searchTexts);
     }
 
-    List<SearchResult> searchPosts(final List<String> searchTexts) {
+    SearchResult searchPosts(final List<String> searchTexts) {
         final var searchKeywords = new ArrayList<String>();
         final var searchAuthors = new ArrayList<String>();
         final var searchTags = new ArrayList<String>();
@@ -69,12 +70,13 @@ public class GhostSearchService {
 
         final List<Post> posts = searchDao.getPosts(searchKeywords, searchAuthors, searchTags);
 
-        return posts.stream()
-                .map(post -> ImmutableSearchResult.builder().title(post.title()).slug(post.slug())
+        final List<MatchedPost> matchedPosts = posts.stream()
+                .map(post -> ImmutableMatchedPost.builder().title(post.title()).slug(post.slug())
                         .summary(SimpleAbbreviator.abbreviate(StringUtils.remove(post.plaintext(), '\n'),
                                 MAX_SUMMARY_LENGTH, searchKeywords))
                         .updatedAt(post.updatedAt()).build())
                 .collect(Collectors.toList());
+        return ImmutableSearchResult.builder().posts(matchedPosts).keywords(searchKeywords).build();
     }
 
 }

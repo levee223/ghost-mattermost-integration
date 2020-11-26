@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 import javax.validation.constraints.NotEmpty;
 
 @RestController
@@ -29,7 +27,7 @@ public class GhostSearchController {
     @PostMapping
     @CrossOrigin
     @Validated
-    public List<SearchResult> get(@RequestParam("q") @NotEmpty final String searchQuery) {
+    public SearchResult get(@RequestParam("q") @NotEmpty final String searchQuery) {
         logger.debug("Search: q={}", searchQuery);
 
         return ghostSearchService.searchPosts(searchQuery);

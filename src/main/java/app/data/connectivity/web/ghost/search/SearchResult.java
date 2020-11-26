@@ -4,22 +4,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.immutables.value.Value;
 
-import java.util.Date;
+import java.util.List;
 
 @Value.Immutable
 @JsonSerialize(as = ImmutableSearchResult.class)
 public interface SearchResult {
 
-    @JsonProperty("title")
-    String title();
+    @JsonProperty("posts")
+    List<MatchedPost> posts();
 
-    @JsonProperty("slug")
-    String slug();
-
-    @JsonProperty("summary")
-    String summary();
-
-    @JsonProperty("updatedAt")
-    Date updatedAt();
+    @JsonProperty("keywords")
+    List<String> keywords();
 
 }
