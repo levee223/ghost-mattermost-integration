@@ -43,7 +43,8 @@ public class SearchDao {
             keywords.forEach(keyword -> {
                 final String likeKeyword = "%"
                         + keyword.replace("\\", "\\\\\\\\").replace("%", "\\%").replace("_", "\\_") + "%";
-                sql.append(" AND (title LIKE ? OR plaintext LIKE ?)");
+                sql.append(" AND (title LIKE ? OR custom_excerpt LIKE ? OR plaintext LIKE ?)");
+                args.add(likeKeyword);
                 args.add(likeKeyword);
                 args.add(likeKeyword);
             });
