@@ -4,9 +4,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
-public final class Abbreviator {
+public final class SimpleAbbreviator {
 
-    private Abbreviator() {}
+    private SimpleAbbreviator() {}
 
     public static String abbreviate(final String text, final int maxLength, final List<String> keywords) {
         if (text.length() <= maxLength) {

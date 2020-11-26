@@ -4,7 +4,7 @@ import app.connectivity.db.ghost.SearchDao;
 import app.data.connectivity.db.ghost.Post;
 import app.data.connectivity.web.ghost.search.ImmutableSearchResult;
 import app.data.connectivity.web.ghost.search.SearchResult;
-import app.util.Abbreviator;
+import app.util.SimpleAbbreviator;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,8 +70,9 @@ public class GhostSearchService {
         final List<Post> posts = searchDao.getPosts(searchKeywords, searchAuthors, searchTags);
 
         return posts.stream()
-                .map(post -> ImmutableSearchResult.builder().title(post.title()).slug(post.slug()).summary(Abbreviator
-                        .abbreviate(StringUtils.remove(post.plaintext(), '\n'), MAX_SUMMARY_LENGTH, searchKeywords))
+                .map(post -> ImmutableSearchResult.builder().title(post.title()).slug(post.slug())
+                        .summary(SimpleAbbreviator.abbreviate(StringUtils.remove(post.plaintext(), '\n'),
+                                MAX_SUMMARY_LENGTH, searchKeywords))
                         .updatedAt(post.updatedAt()).build())
                 .collect(Collectors.toList());
     }
