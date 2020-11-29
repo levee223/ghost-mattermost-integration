@@ -1,4 +1,4 @@
-name: Trigger build if base image is updated
+name: Docker Hub trigger build if base image is updated
 
 on:
   schedule:
