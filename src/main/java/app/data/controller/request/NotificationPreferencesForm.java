@@ -1,16 +1,27 @@
 package app.data.controller.request;
 
 import org.immutables.value.Value;
+import org.immutables.value.Value.Default;
 
+import java.util.Collections;
 import java.util.List;
 
 @Value.Immutable
 public interface NotificationPreferencesForm {
 
-    boolean all();
+    @Default
+    default boolean all() {
+        return false;
+    }
 
-    List<String> tags();
+    @Default
+    default List<String> tags() {
+        return Collections.emptyList();
+    }
 
-    List<String> authors();
+    @Default
+    default List<String> authors() {
+        return Collections.emptyList();
+    }
 
 }
