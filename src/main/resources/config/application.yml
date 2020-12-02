@@ -50,6 +50,15 @@ spring:
   thymeleaf:
     cache: false
 
+management:
+  endpoints:
+    enabledByDefault: false
+    web:
+      basePath: /management
+  endpoint:
+    health:
+      enabled: true
+
 feign:
   client:
     config:
