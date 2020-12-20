@@ -76,7 +76,11 @@ public class GhostSearchService {
                                 MAX_SUMMARY_LENGTH, searchKeywords))
                         .updatedAt(post.updatedAt()).build())
                 .collect(Collectors.toList());
-        return ImmutableSearchResult.builder().posts(matchedPosts).keywords(searchKeywords).build();
+        final var keywords = new ArrayList<String>(searchKeywords.size() + searchAuthors.size() + searchTags.size());
+        keywords.addAll(searchKeywords);
+        keywords.addAll(searchAuthors);
+        keywords.addAll(searchTags);
+        return ImmutableSearchResult.builder().posts(matchedPosts).keywords(keywords).build();
     }
 
 }
