@@ -30,7 +30,7 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
     runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.immutables:value:2.8.8'
-    compileOnly 'org.immutables:value-annotations:2.8.8'
+    compileOnly 'org.immutables:value-annotations:2.8.9-ea-1'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
