@@ -14,4 +14,4 @@ EXPOSE 8080
 WORKDIR /app
 CMD ["app.jar"]
 
-COPY --from=build /src/build/libs/Ghost-Mattermost-integration-*.jar app.jar
+COPY --from=build /src/build/libs/ghost-mattermost-integration-*.jar app.jar

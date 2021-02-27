@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   app:
-    image: lameducks/ghost-mattermost-integration:latest
+    image: levee223/ghost-mattermost-integration:latest
     restart: always
     depends_on:
       - db

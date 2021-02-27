@@ -39,4 +39,4 @@ jobs:
               fi
           }
           
-          trigger '' lameducks/ghost-mattermost-integration latest gcr.io distroless/java 11 "$DOCKER_HUB_TRIGGER_URL"
+          trigger '' levee223/ghost-mattermost-integration latest gcr.io distroless/java 11 "$DOCKER_HUB_TRIGGER_URL"
