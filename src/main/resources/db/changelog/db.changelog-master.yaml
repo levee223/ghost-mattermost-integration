@@ -17,3 +17,27 @@ databaseChangeLog:
                   type: json
                   constraints:
                     nullable: false
+  - changeSet:
+      id: 2
+      author: levee223
+      changes:
+        - createTable:
+            tableName: post_star_rate
+            columns:
+              - column:
+                  name: post_id
+                  type: varchar(24)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: uid
+                  type: varchar(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: score
+                  type: integer
+                  constraints:
+                    nullable: false

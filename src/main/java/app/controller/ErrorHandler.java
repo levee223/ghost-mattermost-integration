@@ -21,6 +21,7 @@ import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.NoHandlerFoundException;
@@ -28,6 +29,8 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import java.util.Map;
 import java.util.UUID;
 import java.util.function.BiFunction;
+
+import javax.validation.ConstraintViolationException;
 
 abstract class ErrorHandler {
 
@@ -47,7 +50,9 @@ abstract class ErrorHandler {
             entry(MethodArgumentNotValidException.class, HttpStatus.BAD_REQUEST),
             entry(MissingServletRequestPartException.class, HttpStatus.BAD_REQUEST),
             entry(BindException.class, HttpStatus.BAD_REQUEST),
-            entry(NoHandlerFoundException.class, HttpStatus.NOT_FOUND));
+            entry(NoHandlerFoundException.class, HttpStatus.NOT_FOUND),
+            entry(ConstraintViolationException.class, HttpStatus.BAD_REQUEST),
+            entry(MethodArgumentTypeMismatchException.class, HttpStatus.BAD_REQUEST));
 
     protected <T> T handle(final Exception ex, final WebRequest request,
             final BiFunction<HttpStatus, ErrorResponse, T> responseFactory) {
