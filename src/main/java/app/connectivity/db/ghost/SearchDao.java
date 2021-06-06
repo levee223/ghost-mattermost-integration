@@ -4,6 +4,7 @@ import app.config.GhostDataSourceConfig;
 import app.data.connectivity.db.ghost.ImmutablePost;
 import app.data.connectivity.db.ghost.Post;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +60,8 @@ public class SearchDao {
             final var posts = new ArrayList<Post>();
             while (rs.next()) {
                 final Post post = ImmutablePost.builder().id(rs.getString(1)).title(rs.getString(2))
-                        .slug(rs.getString(3)).plaintext(rs.getString(4)).updatedAt(rs.getTimestamp(5)).build();
+                        .slug(rs.getString(3)).plaintext(StringUtils.defaultString(rs.getString(4)))
+                        .updatedAt(rs.getTimestamp(5)).build();
                 posts.add(post);
             }
             if (logger.isDebugEnabled()) {
