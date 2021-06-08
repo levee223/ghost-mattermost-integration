@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   app:
-    image: levee223/ghost-mattermost-integration:latest
+    image: ghcr.io/levee223/ghost-mattermost-integration:master
     restart: always
     depends_on:
       - db
