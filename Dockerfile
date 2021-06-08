@@ -1,6 +1,6 @@
 ## 1st stage
 
-FROM adoptopenjdk:11-jdk-hotspot AS build
+FROM adoptopenjdk:16-jdk-hotspot AS build
 
 COPY . /src
 WORKDIR /src
