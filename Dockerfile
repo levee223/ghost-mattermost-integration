@@ -1,10 +1,10 @@
 ## 1st stage
 
-FROM gradle:jdk11 AS build
+FROM adoptopenjdk:11-jdk-hotspot AS build
 
 COPY . /src
 WORKDIR /src
-RUN gradle bootJar
+RUN ./gradlew bootJar
 
 ## 2nd stage
 
